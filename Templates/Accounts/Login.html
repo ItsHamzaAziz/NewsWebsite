@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+
+<div class="container">
+    <h1 class="my-4">Login</h1>
+
+    <!-- All messages from views file will be displayed in this div -->
+    {% for i in messages %}
+        <div class="alert alert-danger" role="alert">{{i}}</div>
+    {% endfor %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control border-dark" id="username" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control border-dark" id="exampleInputPassword1">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <p class="my-4">Don't have an account? <a href="{% url 'signup' %}">Click Here</a> and have one</p>
+</div>
+
+{% include 'footer.html' %}

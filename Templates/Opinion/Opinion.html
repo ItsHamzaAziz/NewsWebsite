@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+
+<div class="container-fluid">
+    {% for i in final_data %}
+        <div class="card mx-auto my-2 w-75">
+            <img src="/Media/{{i.opinion_photo}}" class="card-img-top" alt="..." height="300px">
+            
+            <div class="card-body">
+                <a href="/opinion/{{i.id}}" style="text-decoration: none; color: black;">
+                    <h5 class="card-title" style="font-weight: bold;">{{i.opinion_heading}}</h5>
+                    <p class="card-text">by {{i.writer}}</p>
+                    <p class="card-text"><small class="text-muted">Published at {{i.written_at}}</small></p>
+                </a>
+            </div>
+        </div>
+
+        {% empty %}
+        <h1 class="text-center mt-4">No opinion yet</h1>
+    {% endfor %}
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-4">
+        <!-- If there are older opinions -->
+        {% if final_data.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="/pakistan/?page={{final_data.next_page_number}}" tabindex="-1">See Older Opinions</a>
+            </li>
+        {% endif %}
+        
+        <!-- If there are latest or newer opinions -->
+        {% if final_data.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="/pakistan/?page={{final_data.previous_page_number}}" tabindex="-1">See Newer Opinions</a>
+            </li>
+            
+            <!-- To go to first page or page with latest opinions -->
+            <li class="page-item">
+                <a class="page-link" href="/pakistan/?page=1">See Latest Opinions</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% include 'footer.html' %}
