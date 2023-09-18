@@ -14,7 +14,7 @@
             <!-- If user is not logged in -->
             {% else %}
                 <p class="card-text">{{opinion_object.opinion_content | safe | truncatewords:30}}</p>
-                <p class="card-text">You should be logged in so that you can read the complete opinion. <a href="{% url 'login' %}">Click Here</a> to login</p>
+                <p class="card-text">You should be logged in so that you can read the complete opinion. <a href="{% url 'login_opinion' opinion_object.id %}">Click Here</a> to login</p>
             {% endif %}
             
             <p class="card-text">Written by {{opinion_object.writer}} ({{opinion_object.writer_description}})</p>

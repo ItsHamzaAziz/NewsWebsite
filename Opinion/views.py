@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from .models import *
 from ContactUs.views import contact_us
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
 
 # Create your views here.
 def opinion_page(request):
@@ -35,3 +37,24 @@ def complete_opinion(request, opinion_id):
     }
 
     return render(request, 'Opinion/CompleteOpinion.html', data)
+
+def login_user_opinion(request, opinion_id):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+
+        # If username or password is incorrect, authenticate function returns None
+        if user is not None:
+            login(request, user)        # Logging user in
+            return redirect('complete_opinion', opinion_id=opinion_id)     # Redirecting to home page
+        else:
+            messages.info(request, 'Invalid Info.')
+            return redirect('login')        # Redirecting to login page so that correct information can be entered
+
+    data = {
+        'title' : 'Login - TheNewsPro',     # Title of Login Page
+    }
+
+    return render(request, 'Accounts/Login.html', data)
